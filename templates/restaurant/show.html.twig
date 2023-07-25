@@ -49,12 +49,36 @@
                 <h2>Les avis</h2>
                 <hr>
 
+                
+                
+                {% for comment in restaurant.comments %}
+                    <div class="card mb-2">
+                        <div class="card-header">
+                             Note : {{ comment.rating }}
+                        </div>
+                        <div class="card-body">
+                            Commentaire : " {{ comment.message }} " 
+                        </div>
+                        {# <div class="card-footer">
+                            <form action="">
+                                <div class="form-group">
+                                    <label for="">Réponse</label>
+                                    <input type="text" class="form-control" placeholder="Répondre à cet avis...">
+                                </div>
+                                <button class="btn btn-sm btn-primary float-right">Répondre</button>
+                            </form>
+                        </div> #}
+                    </div>
+                {% endfor %}
+                <h2>Réponse</h2>
+                <hr>
                 <div class="card mb-2">
                     <div class="card-header">
                         Ecrire votre avis sur ce restaurant
                     </div>
+                    {% if app.user %}
                     <div class="card-body">
-                        <form action="">
+                        {# <form action="">
                             <div class="form-group">
                                 <label for="">Message</label>
                                 <textarea name="" id="" rows="2" class="form-control"></textarea>
@@ -65,29 +89,20 @@
                             </div>
                             <button class="btn-sm btn-primary float-right">Envoyer</button>
 
-                        </form>
+                        </form> #}
+                        <div class="card-body">
+                        {{ form_start(formComment) }}
+                        {{ form_widget(formComment) }}
+
+                        <button class="btn-sm btn-primary float-right">Envoyer</button>
+                        {{ form_end(formComment) }}
+                    </div>
+                    {% else %}
+                        <a class="nav-link" href="{{ path('app_login') }}" tabindex="-1" aria-disabled="true">Me connecter pour donner mon avis</a>
+                        
+                     {% endif %}
                     </div>
                 </div>
-
-                {% for comment in restaurant.comments %}
-                    <div class="card mb-2">
-                        <div class="card-header">
-                             Note : {{ comment.rating }}
-                        </div>
-                        <div class="card-body">
-                            Message écrit : " {{ comment.message }} " 
-                        </div>
-                        <div class="card-footer">
-                            <form action="">
-                                <div class="form-group">
-                                    <label for="">Réponse</label>
-                                    <input type="text" class="form-control" placeholder="Répondre à cet avis...">
-                                </div>
-                                <button class="btn btn-sm btn-primary float-right">Répondre</button>
-                            </form>
-                        </div>
-                    </div>
-                {% endfor %}
             </div>
         </div>
     </div>

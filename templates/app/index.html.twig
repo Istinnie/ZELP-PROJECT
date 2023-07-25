@@ -22,6 +22,7 @@
 
 {% block body %}
         <section class="jumbotron text-center">
+
             {% for restaurant in restaurants %}
                 {# {% if loop.first %} #}
                     <div class="container">
@@ -32,7 +33,7 @@
                             {{ restaurant.description }}
                         </p>
                         <p>
-                            <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-success my-2">Ajouter un avis</a>
+                            <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-warning my-2">Les avis</a>
                         </p>
                     </div>
                 {# {% endif %} #}

@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 use App\Entity\Restaurant;
-use App\Entity\Avis;
+use App\Entity\Comment;
 use App\Form\RestaurantType;
+use App\Form\CommentType;
 use App\Repository\RestaurantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -51,18 +53,103 @@ class RestaurantController extends AbstractController
         ]);
     }
 
+    // /**
+    //  * Affiche un restaurant
+    //  * @Route("/restaurant/{id}", name="restaurant_show", methods={"GET"}, requirements={"restaurant"="\d+"})
+    //  * @param Restaurant $restaurant
+    //  * @return Response
+    //  */
+    
+    // public function show(Restaurant $restaurant)
+    // {
+        
+    //     return $this->render('restaurant/show.html.twig', [
+    //         'restaurant' => $restaurant
+    //     ]);
+    // }
     /**
      * Affiche un restaurant
-     * @Route("/restaurant/{id}", name="restaurant_show", methods={"GET"}, requirements={"restaurant"="\d+"})
+     * @Route("/restaurant/{id}", name="restaurant_show", methods={"GET", "POST"}, requirements={"restaurant"="\d+"})
+     * @param Request $request
      * @param Restaurant $restaurant
      * @return Response
      */
-    
-    public function show(Restaurant $restaurant)
+    public function show(Request $request, Restaurant $restaurant)
     {
-        
+
+        /**
+         * Gestion du formulaire Picture
+         */
+        // $picture = new RestaurantPicture();
+        // $formPicture = $this->createForm(RestaurantPictureType::class, $picture);
+
+        // $formPicture->handleRequest($request);
+
+        // if ($formPicture->isSubmitted() && $formPicture->isValid()) {
+
+        //     $file = $formPicture['filename']->getData();
+        //     if ($file) {
+
+        //         $filename = $fileUploader->upload($file);
+
+        //         $picture->setFilename($filename);
+
+        //         // Le restaurant de l'image est le restaurant qui est affiché sur la page
+        //         $picture->setRestaurant($restaurant);
+
+        //     }
+
+        //     $entityManager = $this->getDoctrine()->getManager();
+        //     $entityManager->persist($picture);
+        //     $entityManager->flush();
+
+        //     // On redirige vers la page du restaurant une fois l'image postée
+        //     return $this->redirectToRoute('restaurant_show', ['restaurant' => $restaurant->getId()]);
+        // }
+        /**
+         * // Fin de gestion du formulaire Picture
+         */
+
+        /**
+         * Gestion du formulaire Review
+         */
+
+        $comment = new Comment();
+
+        $formComment = $this->createForm(CommentType::class, $comment);
+        $formComment->handleRequest($request);
+
+        if ($formComment->isSubmitted() && $formComment->isValid()) {
+            $comment = $formComment->getData();
+
+            // Le User de la review est le User connecté
+            $comment->setUser($this->getUser());
+
+            // Le restaurant de la review est le Restaurant qu'on affiche
+            $comment->setRestaurant($restaurant);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            // On redirige vers la page du restaurant une fois la review postée
+            return $this->redirectToRoute('restaurant_show', ['id' => $restaurant->getId()]);
+        }
+
+        /**
+         * // Fin de gestion du formulaire Review
+         */
+
+        /**
+         * Par défaut : on renvoie la vue restaurant/show.html.twig avec:
+         * - le restaurant à afficher
+         * - le formulaire d'images formPicture
+         * - le formulaire de review formReview
+         */
         return $this->render('restaurant/show.html.twig', [
-            'restaurant' => $restaurant
+            'restaurant' => $restaurant,
+            // 'formPicture' => $formPicture->createView(),
+            'formComment' => $formComment->createView()
         ]);
     }
 

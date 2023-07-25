@@ -6,11 +6,18 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
     </div>
-
+    <ul class="navbar-nav ml-auto">
+     
+        
+    </ul>
 
     <div class="collapse navbar-collapse justify-content-end">
     <ul class="navbar-nav ml-auto">
+        
         {% if app.user %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('restaurant_new') }}"  class="btn btn-success my-2">Ajouter un restaurant</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_restaurant_index') }}" tabindex="-1" aria-disabled="true">Bienvenue, {{app.user.email}} !</a>
             </li>
@@ -18,6 +25,7 @@
                 <a class="nav-link" href="{{ path('app_logout') }}" tabindex="-1" aria-disabled="true">Se déconnecter</a>
             </li>
         {% else %}
+            
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_login') }}" tabindex="-1" aria-disabled="true">Se connecter</a>
             </li>
