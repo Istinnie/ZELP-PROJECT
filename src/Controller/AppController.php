@@ -27,8 +27,9 @@ class AppController extends AbstractController
     #[Route('/', name: 'app_restaurant_index', methods: ['GET'])]
     public function index(RestaurantRepository $restaurantRepository): Response
     {
-        return $this->render('restaurant/index.html.twig', [
-            'restaurants' => $restaurantRepository->findAll(),
+        return $this->render('app/index.html.twig', [
+            // 'restaurants' => $restaurantRepository->findAll(),
+            'restaurants' => $this->getDoctrine()->getRepository(Restaurant::class)->findLastTenElements(),
         ]);
     }
 }

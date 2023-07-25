@@ -154,4 +154,17 @@ class Restaurant
 
         return $this;
     }
+    public function getAverageRating() : float
+    {
+
+        $sum = 0;
+        $total = 0;
+
+        foreach($this->getComments() as $comment) {
+            $sum += $comment->getRating();
+            $total++;
+        }
+
+        return $sum/$total;
+    }
 }
