@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Form\RestaurantType;
 use App\Form\CommentType;
 use App\Repository\RestaurantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -164,22 +165,48 @@ class RestaurantController extends AbstractController
     {
     }
 
-    /**
-     * Affiche le formulaire d'édition d'un restaurant (GET)
-     * Traite le formulaire d'édition d'un restaurant (POST)
-     * @Route("/restaurant/{restaurant}/edit", name="restaurant_edit", methods={"GET", "POST"})
-     * @param Restaurant $restaurant
-     */
-    public function edit(Restaurant $restaurant)
+    // /**
+    //  * Affiche le formulaire d'édition d'un restaurant (GET)
+    //  * Traite le formulaire d'édition d'un restaurant (POST)
+    //  * @Route("/restaurant/{restaurant}/edit", name="restaurant_edit", methods={"GET", "POST"})
+    //  * @param Restaurant $restaurant
+    //  */
+    // public function edit(Restaurant $restaurant)
+    // {
+    // }
+    #[Route('/restaurant/{id}/edit', name: 'app_restaurant_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Restaurant $restaurant, EntityManagerInterface $entityManager): Response
     {
-    }
+        $form = $this->createForm(RestaurantType::class, $restaurant);
+        $form->handleRequest($request);
 
-    /**
-     * Supprime un restaurant
-     * @Route("/restaurant/{restaurant}", name="restaurant_delete", methods={"DELETE"})
-     * @param Restaurant $restaurant
-     */
-    public function delete(Restaurant $restaurant)
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_restaurant_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('restaurant/edit.html.twig', [
+            'restaurant' => $restaurant,
+            'form' => $form,
+        ]);
+    }
+    // /**
+    //  * Supprime un restaurant
+    //  * @Route("/restaurant/{restaurant}", name="restaurant_delete", methods={"DELETE"})
+    //  * @param Restaurant $restaurant
+    //  */
+    // public function delete(Restaurant $restaurant)
+    // {
+    // }
+    #[Route('/restaurant/{id}', name: 'app_restaurant_delete', methods: ['POST'])]
+    public function delete(Request $request, Restaurant $restaurant, EntityManagerInterface $entityManager): Response
     {
+        if ($this->isCsrfTokenValid('delete'.$restaurant->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($restaurant);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_restaurant_index', [], Response::HTTP_SEE_OTHER);
     }
 }

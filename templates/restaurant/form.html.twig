@@ -3,15 +3,16 @@
 {% block title %}Liste des restaurants{% endblock %}
 
 {% block body %}
-    <div class="container mt-3">
+    <div class="container mt-3 col-4">
         <div class="row">
+        
             <div class="col">
-
+                <h1 class="mb-4">Créer un restaurant</h1>
                 {{ form_start(form) }}
-                {{ form_widget(form) }}
-                    <button class="btn btn-success">Créer un restaurant</button>
+                {{ form_widget(form) }} 
+                    <button class="btn btn-success mt-4">Ajouter </button>
                 {{ form_end(form) }}
-
+                <a href="{{ path('app_restaurant_index') }}" class="btn btn-primary mt-4">Retourner à la liste</a>
             </div>
         </div>
     </div>

@@ -21,61 +21,76 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-        <section class="jumbotron text-center">
+    <div class="mt-4 text-center">
+        <h1>Liste des restaurants</h1>
+    </div>
+    
+    {# <section class="jumbotron text-center">
+        
+        <div class="row align-items-center">
+    
             {% for restaurant in restaurants %}
-                {# {% if loop.first %} #}
-                    <div class="container">
-                    
-                        {# <h1>Notre meilleur restaurant est...</h1> #}
-                        
-                        <p class="lead text-muted">
+                {% if loop.first %}
+                <div class="col">    
+
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="..." alt="Card image cap">
+                        <div class="card-body">
                             
-                        </p>
-                        <p>
-                            
-                        </p>
-                    </div>
-
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="..." alt="Card image cap">
-                    <div class="card-body">
-                        
-                        <h2 class="card-title">{{ restaurant.name }} <small class="badge badge-primary">Note : {{ restaurant.averageRating | number_format(1, ',') }} </small></h2>
-                        <p class="card-text">{{ restaurant.description }}</p>
-                        
-                        <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-warning my-2">Les avis</a>
-                    </div>
-                </div>    
-                {# {% endif %} #}
-            {% endfor %}
-        </section>
- {# 
-        <div class="album py-5 bg-light">
-            <div class="container">
-
-               <div class="row">
-                    {% for restaurant in restaurants %}
-                        {% if not loop.first %}
-                            <div class="col-md-4">
-                                <div class="card mb-4 shadow-sm">
-                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                                    <div class="card-body">
-                                        {# <p class="card-text">
-                                            <h2>{{restaurant.name}}</h2>
-                                                <small class="badge badge-primary">{{ restaurant.averageRating | number_format(2, ',') }} sur 5 étoiles !</small>
-                                                {{ restaurant.description }}
-                                        </p> }
-
-                                        <div class="d-flex justify-content-between float-right">
-                                            <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-sm btn-outline-secondary">Donner un avis</a>
-                                        </div>
-                                    </div>
+                            <h2 class="card-title">{{ restaurant.name }}</h2> 
+                            <p class="card-text">{{ restaurant.description }}</p>
+                            <div class="container">
+                                <h3 class="btn btn-light my-2">Note : {{ restaurant.averageRating | number_format(2, ',') }} </h3>
                                 </div>
-                            </div> 
-                        {% endif %}
-                    {% endfor %}
-                </div>
+                            <div class="container">
+                                <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-warning my-2">Avis</a>
+                                <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}" class="btn btn-secondary my-2">Détail</a>
+                                <a href="{{ path('app_restaurant_edit', {'id': restaurant.id}) }}" class="btn btn-success my-2 ">Modifier</a>
+                            </div>
+                        </div>
+                    </div> 
+                </div>    
+            {% endif %}
+        {% endfor %}
+        </div>
+    </section> #}
+ 
+    <div class="album py-5 ">
+        <div class="container">
+        <div class="nav-item">
+            <a class="btn btn-primary d-bloc mb-4" href="{{ path('restaurant_new') }}"  class="btn btn-success my-2">Ajouter un restaurant</a>
+        </div>
+            <div class="row">
+                {% for restaurant in restaurants %}
+                    
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Image</text></svg>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <h2>
+                                    {{restaurant.name}}
+                                    <div class="btn btn-light ml-1 d-flex justify-content-between float-right">Note : {{ restaurant.averageRating | number_format(2, ',') }}</div>
+                                    </h2>
+                                        
+                                </p> 
+                                <p class="card-text">
+                                    {{ restaurant.description }}
+                                </p>
+                                <div class="d-flex justify-content-between float-right">
+                                    <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-warning my-2 m-2">Avis</a>
+                                    {# <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}" class="btn btn-secondary m-2">Détail</a> #}
+                                    <a href="{{ path('app_restaurant_edit', {'id': restaurant.id}) }}" class="btn btn-success my-2 m-2">Modifier</a>
+                                
+                                    {# <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-sm btn-outline-warning my-2">Donner un avis</a> #}
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                {% endfor %}
             </div>
         </div>
-#}
+    </div>
+
 {% endblock %}
