@@ -57,9 +57,11 @@
  
     <div class="album py-5 ">
         <div class="container">
+        {% if app.user %}
         <div class="nav-item">
             <a class="btn btn-primary d-bloc mb-4" href="{{ path('restaurant_new') }}"  class="btn btn-success my-2">Ajouter un restaurant</a>
         </div>
+        {% endif %}
             <div class="row">
                 {% for restaurant in restaurants %}
                     
@@ -80,8 +82,9 @@
                                 <div class="d-flex justify-content-between float-right">
                                     <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-warning my-2 m-2">Avis</a>
                                     {# <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}" class="btn btn-secondary m-2">Détail</a> #}
+                                    {% if app.user %}
                                     <a href="{{ path('app_restaurant_edit', {'id': restaurant.id}) }}" class="btn btn-success my-2 m-2">Modifier</a>
-                                
+                                    {% endif %}
                                     {# <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-sm btn-outline-warning my-2">Donner un avis</a> #}
                                 </div>
                             </div>
