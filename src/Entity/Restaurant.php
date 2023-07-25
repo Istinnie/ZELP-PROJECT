@@ -162,7 +162,7 @@ class Restaurant
     {
 
         $sum = 0;
-        $total = 0  ;
+        $total = 10  ;
 
         foreach($this->getComments() as $comment) {
             $sum += $comment->getRating();

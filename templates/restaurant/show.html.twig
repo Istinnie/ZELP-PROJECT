@@ -8,12 +8,13 @@
             <div class="col-6">
                 <h2>{{ restaurant.name }}</h2>
                 <ul>
-                    <li>
-                        <strong>Localité:</strong>  {{ restaurant.ville.codepostal }}, {{ restaurant.ville.name }}
+                <li>
+                        <strong>Note :</strong> {{ restaurant.averageRating | number_format(2, ',') }}
                     </li>
                     <li>
-                        <strong>Note moyenne :</strong> {{ restaurant.averageRating | number_format(2, ',') }}
+                        <strong>Adresse :</strong>  {{ restaurant.ville.codepostal }}, {{ restaurant.ville.name }}
                     </li>
+                    
                     <li>
                         <strong>Description :</strong> {{ restaurant.description }}
                     </li>

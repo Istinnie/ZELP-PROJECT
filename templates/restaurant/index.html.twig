@@ -27,14 +27,25 @@
                     <div class="container">
                     
                         {# <h1>Notre meilleur restaurant est...</h1> #}
-                        <h2>{{ restaurant.name }} <small class="badge badge-primary">Note : {{ restaurant.averageRating | number_format(1, ',') }} </small></h2>
+                        
                         <p class="lead text-muted">
-                            {{ restaurant.description }}
+                            
                         </p>
                         <p>
-                            <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-success my-2">Les avis</a>
+                            
                         </p>
                     </div>
+
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                        
+                        <h2 class="card-title">{{ restaurant.name }} <small class="badge badge-primary">Note : {{ restaurant.averageRating | number_format(1, ',') }} </small></h2>
+                        <p class="card-text">{{ restaurant.description }}</p>
+                        
+                        <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}"  class="btn btn-warning my-2">Les avis</a>
+                    </div>
+                </div>    
                 {# {% endif %} #}
             {% endfor %}
         </section>
