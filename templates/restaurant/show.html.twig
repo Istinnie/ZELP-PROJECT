@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container mt-3">
         <div class="row">
-            <div class="col-4">
+            <div class="col-6">
                 <h2>{{ restaurant.name }}</h2>
                 <ul>
                     <li>
@@ -14,10 +14,11 @@
                     <li>
                         <strong>Note moyenne :</strong> {{ restaurant.averageRating | number_format(2, ',') }}
                     </li>
+                    <li>
+                        <strong>Description :</strong> {{ restaurant.description }}
+                    </li>
                 </ul>
-                <small>
-                    {{ restaurant.description }}
-                </small>
+                
                 {# <p>
                     <img src="https://picsum.photos/id/{{ random(1,1000) }}/800/600" alt="" width="30%" class="mb-1" data-toggle="modal" data-target="#exampleModal">
                     <img src="https://picsum.photos/id/{{ random(1,1000) }}/800/600" alt="" width="30%" class="mb-1" data-toggle="modal" data-target="#exampleModal">
