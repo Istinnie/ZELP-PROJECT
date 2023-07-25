@@ -24,9 +24,13 @@ class Ville
     #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Restaurant::class, orphanRemoval: true)]
     private Collection $restaurants;
 
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: User::class)]
+    private Collection $users;
+
     public function __construct()
     {
         $this->restaurants = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,6 +86,36 @@ class Ville
             // set the owning side to null (unless already changed)
             if ($restaurant->getVille() === $this) {
                 $restaurant->setVille(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getVille() === $this) {
+                $user->setVille(null);
             }
         }
 

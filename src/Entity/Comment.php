@@ -35,6 +35,10 @@ class Comment
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private Collection $childs;
 
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -132,6 +136,18 @@ class Comment
                 $child->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

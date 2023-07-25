@@ -35,6 +35,10 @@ class Restaurant
     #[ORM\OneToMany(mappedBy: 'restaurant', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\ManyToOne(inversedBy: 'restaurants')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -158,7 +162,7 @@ class Restaurant
     {
 
         $sum = 0;
-        $total = 0;
+        $total = 2  ;
 
         foreach($this->getComments() as $comment) {
             $sum += $comment->getRating();
@@ -166,5 +170,17 @@ class Restaurant
         }
 
         return $sum/$total;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

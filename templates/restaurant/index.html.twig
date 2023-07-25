@@ -1,20 +1,69 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
-{% block title %}Hello RestaurantController!{% endblock %}
+{% block title %}Liste des restaurants{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello  ✅</h1>
-
-    This friendly message is coming from:
+<h1>Liste des restaurants</h1>
     <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Istinnie Velonkasina/OneDrive/Documents/CDA/Exercices/12 Exercice BILAN ECF/3 Projet ZELP/ZELP-PROJECT/src/Controller/RestaurantController.php'|file_link(0) }}">src/Controller/RestaurantController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Istinnie Velonkasina/OneDrive/Documents/CDA/Exercices/12 Exercice BILAN ECF/3 Projet ZELP/ZELP-PROJECT/templates/restaurant/index.html.twig'|file_link(0) }}">templates/restaurant/index.html.twig</a></code></li>
+        {% for restaurant in restaurants %}
+            <li>
+                {{ restaurant.name }}<br>
+                <small>{{ restaurant.description }}</small>
+            </li>
+        {% endfor %}
+
     </ul>
-</div>
+
+
+{% endblock %} #}
+
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+        <section class="jumbotron text-center">
+            {% for restaurant in restaurants %}
+                {# {% if loop.first %} #}
+                    <div class="container">
+                        {# <h1>Notre meilleur restaurant est...</h1> #}
+                        {# <h2>{{ restaurant.name }} <small class="badge badge-primary">Note : {{ restaurant.averageRating | number_format(0, ',') }} </small></h2> #}
+                        <p class="lead text-muted">
+                            {{ restaurant.description }}
+                        </p>
+                        <p>
+                            <a href="#" class="btn btn-success my-2">Votre avis ?</a>
+                        </p>
+                    </div>
+                {# {% endif %} #}
+            {% endfor %}
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+
+                <div class="row">
+                    {# {% for restaurant in restaurants %}
+                        {% if not loop.first %}
+                            <div class="col-md-4">
+                                <div class="card mb-4 shadow-sm">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                                    <div class="card-body">
+                                        {# <p class="card-text">
+                                            <h2>{{restaurant.name}}</h2>
+                                                <small class="badge badge-primary">{{ restaurant.averageRating | number_format(2, ',') }} sur 5 étoiles !</small>
+                                                {{ restaurant.description }}
+                                        </p> #}
+
+                                        {# <div class="d-flex justify-content-between float-right">
+                                            <a href="{{ path('restaurant_show') }}" class="btn btn-sm btn-outline-secondary">Donner un avis</a>
+                                        </div> }
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %} #}
+                </div>
+            </div>
+        </div>
+
 {% endblock %}
